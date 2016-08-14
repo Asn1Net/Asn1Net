@@ -40,25 +40,6 @@ namespace Net.Asn1.Writer.Tests
             var b = encoded.ToHex();
         }
 
-
-        [Trait("SEQUENCE", "SEQUENCE")]
-        [Fact]
-        public void ReadSequence1()
-        {
-            var encoded = File.ReadAllBytes(@"d:\work\estoolkit vzorky ber\Signature-C-B-LTA-10..req");
-            using (var ms = new MemoryStream(encoded))
-            {
-                List<Asn1ObjectBase> asn1Obj;
-                new BerReader(ms).Read(out asn1Obj);
-
-                Assert.NotNull(asn1Obj);
-
-                Print(asn1Obj);
-
-                var res = str.ToString();
-            }
-        }
-
         private static StringBuilder str = new StringBuilder();
         private static void Print(List<Asn1ObjectBase> asn1Obj, int deep = 0)
         {
