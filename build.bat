@@ -2,6 +2,7 @@
 
 @rem Delete output directory
 rmdir /S /Q netstandard1.3
+rmdir /S /Q nupkgs
 
 @rem Clean project
 rmdir /S /Q .\src\Asn1Net\bin
@@ -24,8 +25,9 @@ mkdir netstandard1.3 || goto :error
 copy .\src\Asn1Net\bin\Release\netstandard1.3\Asn1Net.dll .\netstandard1.3 || goto :error
 copy .\src\Asn1Net\bin\Release\netstandard1.3\Asn1Net.xml .\netstandard1.3 || goto :error
 
-
-dotnet pack .\src\Asn1Net\ --configuration Release || goto :error
+@rem Create nuget package
+mkdir nupkgs || goto :error
+dotnet pack .\src\Asn1Net\ --configuration Release --output .\nupkgs || goto :error
 
 @echo *** BUILD NETSTANDARD1.3 SUCCESSFUL ***
 @endlocal
