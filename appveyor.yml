@@ -1,0 +1,8 @@
+version: 1.0.0-ci.{build}
+build_script:
+- cmd: build.bat
+test_script:
+- cmd: dotnet test .\test\Asn1Net.Test\
+artifacts:
+- path: netstandard1.3
+  name: Asn1Net
