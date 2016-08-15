@@ -8,10 +8,17 @@ rmdir /S /Q nupkgs
 rmdir /S /Q .\src\Asn1Net\bin
 rmdir /S /Q .\src\Asn1Net\obj
 del .\src\Asn1Net\project.lock.json
+rmdir /S /Q .\test\Asn1Net.Test\bin
+rmdir /S /Q .\test\Asn1Net.Test\obj
+del .\test\Asn1Net.Test\project.lock.json
 
 @rem Build project
 dotnet restore .\src\Asn1Net\ || goto :error
 dotnet build .\src\Asn1Net\ --configuration Release || goto :error
+
+dotnet restore .\test\Asn1Net.Test\ || goto :error
+dotnet build .\test\Asn1Net.Test\ --configuration Release || goto :error
+@rem dotnet test .\test\Asn1Net.Test\ || goto :error
 
 @rem Copy result to output directory
 mkdir netstandard1.3 || goto :error
