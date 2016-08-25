@@ -45,20 +45,48 @@ namespace Net.Asn1.Writer.Tests
         {
             foreach (var item in asn1Obj)
             {
-                str.AppendLine(new string('\t',deep) + item.ToString());
+                str.AppendLine(new string('\t', deep) + item.ToString());
 
                 var seq = item as Asn1Sequence;
                 if (seq != null)
                 {
-                    Print(seq.Content, deep+1);
+                    Print(seq.Content, deep + 1);
                     continue;
                 }
 
                 var set = item as Asn1Set;
                 if (set != null)
                 {
-                    Print(set.Content, deep+1);
+                    Print(set.Content, deep + 1);
                 }
+
+                var contextSpecific = item as Asn1ContextSpecific;
+                if (contextSpecific != null)
+                {
+                    using (var ms = new MemoryStream(contextSpecific.Content.ToArray()))
+                    {
+                        List<Asn1ObjectBase> asn1ObjInner;
+                        new BerReader(ms).Read(out asn1ObjInner);
+
+                        Assert.NotNull(asn1ObjInner);
+
+                        Print(asn1ObjInner, deep + 1);
+                    }
+                }
+
+                //var octetString = item as Asn1OctetString;
+                //if (octetString != null)
+                //{
+                //    using (var ms = new MemoryStream(octetString.Content))
+                //    {
+                //        List<Asn1ObjectBase> asn1ObjInner;
+                //        new BerReader(ms).Read(out asn1ObjInner);
+
+                //        Assert.NotNull(asn1ObjInner);
+
+                //        Print(asn1ObjInner, deep + 1);
+                //    }
+                //}
             }
         }
     }

@@ -48,14 +48,18 @@ namespace Net.Asn1.Type
         /// Preferably used when reading UTC TIME.
         /// </summary>
         /// <param name="content">BER encoded value in a Stream.</param>
-        internal Asn1UtcTime(SubStream content)
-            : base(Asn1Class.Universal, false, (int)Asn1Type.UtcTime, content)
+        /// <param name="constructed">Flag if type is constructed or primitive.</param>
+        internal Asn1UtcTime(SubStream content, bool constructed)
+            : base(Asn1Class.Universal, constructed, (int)Asn1Type.UtcTime, content)
         {
         }
 
         /// <inheritdoc/>
         public override byte[] Write()
         {
+            if (Constructed)
+                throw new FormatException("The encoding of the TIME type shall be primitive.");
+
             var utcDateTime = this.Content.ToUniversalTime();
             var dateTimeString = utcDateTime.ToString("yyMMddHHmmss", CultureInfo.InvariantCulture);
 

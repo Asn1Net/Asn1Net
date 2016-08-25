@@ -33,20 +33,28 @@ namespace Net.Asn1.Type
         /// <summary>
         /// Initializes a new instance of the <see cref="Asn1OctetString"/> class.
         /// Preferably used when encoding OCTET STRING.
+        /// The encoding of an octet string value shall be either primitive or constructed at the option of the sender. 
+        /// NOTE – Where it is necessary to transfer part of an octet string before the entire octet string is available, 
+        /// the constructed encoding is used. 
         /// </summary>
         /// <param name="content">Content to be encoded.</param>
-        public Asn1OctetString(byte[] content)
-            : base(Asn1Class.Universal, false, (int)Asn1Type.OctetString, content)
+        /// <param name="constructed">Flag if type is constructed or primitive.</param>
+        public Asn1OctetString(byte[] content, bool constructed = false)
+            : base(Asn1Class.Universal, constructed, (int)Asn1Type.OctetString, content)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Asn1OctetString"/> class.
         /// Preferably used when reading OCTET STRING.
+        /// The encoding of an octet string value shall be either primitive or constructed at the option of the sender. 
+        /// NOTE – Where it is necessary to transfer part of an octet string before the entire octet string is available, 
+        /// the constructed encoding is used. 
         /// </summary>
         /// <param name="content">BER encoded value in a Stream.</param>
-        internal Asn1OctetString(SubStream content)
-           : base(Asn1Class.Universal, false, (int)Asn1Type.OctetString, content)
+        /// <param name="constructed">Flag if type is constructed or primitive.</param>
+        internal Asn1OctetString(SubStream content, bool constructed)
+           : base(Asn1Class.Universal, constructed, (int)Asn1Type.OctetString, content)
         {
         }
 

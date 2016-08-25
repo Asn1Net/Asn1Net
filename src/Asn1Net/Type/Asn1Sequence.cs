@@ -32,28 +32,35 @@ namespace Net.Asn1.Type
         /// <summary>
         /// Initializes a new instance of the <see cref="Asn1Sequence"/> class.
         /// Preferably used when encoding SEQUENCE.
+        /// The encoding of a sequence value shall be constructed.
         /// </summary>
         /// <param name="asn1Class">Class of given Asn.1 object.</param>
         /// <param name="content">Content to be encoded.</param>
-        public Asn1Sequence(Asn1Class asn1Class, List<Asn1ObjectBase> content)
-            : base(asn1Class, true, (int)Asn1Type.Sequence, content)
+        /// <param name="constructed">Flag if type is constructed or primitive.</param>
+        public Asn1Sequence(Asn1Class asn1Class, List<Asn1ObjectBase> content, bool constructed = true)
+            : base(asn1Class, constructed, (int)Asn1Type.Sequence, content)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Asn1Sequence"/> class.
         /// Preferably used when reading SEQUENCE.
+        /// The encoding of a sequence value shall be constructed.
         /// </summary>
         /// <param name="asn1Class">Class of given Asn.1 object.</param>
         /// <param name="content">BER encoded value in a Stream.</param>
-        public Asn1Sequence(Asn1Class asn1Class, SubStream content)
-            : base(asn1Class, true, (int)Asn1Type.Sequence, content)
+        /// <param name="constructed">Flag if type is constructed or primitive.</param>
+        public Asn1Sequence(Asn1Class asn1Class, SubStream content, bool constructed)
+            : base(asn1Class, constructed, (int)Asn1Type.Sequence, content)
         {
         }
 
         /// <inheritdoc/>
         public override byte[] Write()
         {
+            if (Constructed == false)
+                throw new FormatException("The encoding of a sequence value shall be constructed.");
+
             var contentBytes = new List<byte>();
             foreach (var item in this.Content)
             {

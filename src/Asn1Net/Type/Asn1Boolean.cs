@@ -30,6 +30,7 @@ namespace Net.Asn1.Type
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Asn1Boolean"/> class. Preferably used when encoding BOOLEAN.
+        /// The encoding of a boolean value shall be primitive.
         /// </summary>
         /// <param name="content">Content to be encoded.</param>
         public Asn1Boolean(bool content)
@@ -39,10 +40,12 @@ namespace Net.Asn1.Type
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Asn1Boolean"/> class from BER encoded value. Preferably used when reading BOOLEAN.
+        /// The encoding of a boolean value shall be primitive.
         /// </summary>
         /// <param name="content">BER encoded value in a Stream.</param>
-        internal Asn1Boolean(SubStream content)
-             : base(Asn1Class.Universal, false, (int)Asn1Type.Boolean, content)
+        /// <param name="constructed">Flag if type is constructed or primitive.</param>
+        internal Asn1Boolean(SubStream content, bool constructed)
+             : base(Asn1Class.Universal, constructed, (int)Asn1Type.Boolean, content)
         {
         }
 

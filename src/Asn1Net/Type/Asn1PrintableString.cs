@@ -35,6 +35,7 @@ namespace Net.Asn1.Type
         /// <summary>
         /// Initializes a new instance of the <see cref="Asn1PrintableString"/> class.
         /// Preferably used when encoding PRINTABLE STRING.
+        /// For bit string, octet string and restricted character string types, the constructed form of encoding shall not be used.
         /// </summary>
         /// <param name="content">Content to be encoded.</param>
         public Asn1PrintableString(string content)
@@ -47,14 +48,18 @@ namespace Net.Asn1.Type
         /// Preferably used when reading PRINTABLE STRING.
         /// </summary>
         /// <param name="content">BER encoded value in a Stream.</param>
-        internal Asn1PrintableString(SubStream content)
-            : base(Asn1Class.Universal, false, (int)Asn1Type.PrintableString, content)
+        /// <param name="constructed">Flag if type is constructed or primitive.</param>
+        internal Asn1PrintableString(SubStream content, bool constructed)
+            : base(Asn1Class.Universal, constructed, (int)Asn1Type.PrintableString, content)
         {
         }
 
         /// <inheritdoc/>
         public override byte[] Write()
         {
+            if (Constructed)
+                throw new FormatException("For bit string, octet string and restricted character string types, the constructed form of encoding shall not be used.");
+
             var res = new List<byte>();
             var val = Encoding.ASCII.GetBytes(this.Content);
 

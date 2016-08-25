@@ -144,70 +144,70 @@ namespace Net.Asn1
                         shouldBeType = new Asn1Eoc();
                         break;
                     case Asn1Type.Boolean:
-                        shouldBeType = new Asn1Boolean(content);
+                        shouldBeType = new Asn1Boolean(content, constructed);
                         break;
                     case Asn1Type.Integer:
-                        shouldBeType = new Asn1Integer(content);
+                        shouldBeType = new Asn1Integer(content, constructed);
                         break;
                     case Asn1Type.BitString:
-                        shouldBeType = new Asn1BitString(content);
+                        shouldBeType = new Asn1BitString(content, constructed);
                         break;
                     case Asn1Type.OctetString:
-                        shouldBeType = new Asn1OctetString(content);
+                        shouldBeType = new Asn1OctetString(content, constructed);
                         break;
                     case Asn1Type.Null:
-                        shouldBeType = new Asn1Null();
+                        shouldBeType = new Asn1Null(constructed);
                         break;
                     case Asn1Type.ObjectIdentifier:
-                        shouldBeType = new Asn1ObjectIdentifier(content);
+                        shouldBeType = new Asn1ObjectIdentifier(content, constructed);
                         break;
                     case Asn1Type.Real:
-                        shouldBeType = new Asn1Real(content);
+                        shouldBeType = new Asn1Real(content, constructed);
                         break;
                     case Asn1Type.Enumerated:
-                        shouldBeType = new Asn1Enumerated(content);
+                        shouldBeType = new Asn1Enumerated(content, constructed);
                         break;
                     case Asn1Type.Utf8String:
-                        shouldBeType = new Asn1Utf8String(content);
+                        shouldBeType = new Asn1Utf8String(content, constructed);
                         break;
                     case Asn1Type.RelativeOid:
-                        shouldBeType = new Asn1RelativeOid(content);
+                        shouldBeType = new Asn1RelativeOid(content, constructed);
                         break;
                     case Asn1Type.Sequence:
-                        shouldBeType = new Asn1Sequence(asn1Class, content);
+                        shouldBeType = new Asn1Sequence(asn1Class, content, constructed);
                         break;
                     case Asn1Type.Set:
-                        shouldBeType = new Asn1Set(asn1Class, content);
+                        shouldBeType = new Asn1Set(asn1Class, content, constructed);
                         break;
                     case Asn1Type.NumericString:
-                        shouldBeType = new Asn1NumericString(content);
+                        shouldBeType = new Asn1NumericString(content, constructed);
                         break;
                     case Asn1Type.PrintableString:
-                        shouldBeType = new Asn1PrintableString(content);
+                        shouldBeType = new Asn1PrintableString(content, constructed);
                         break;
                     case Asn1Type.T61String:
-                        shouldBeType = new Asn1T61String(content);
+                        shouldBeType = new Asn1T61String(content, constructed);
                         break;
                     case Asn1Type.Ia5String:
-                        shouldBeType = new Asn1Ia5String(content);
+                        shouldBeType = new Asn1Ia5String(content, constructed);
                         break;
                     case Asn1Type.UtcTime:
-                        shouldBeType = new Asn1UtcTime(content);
+                        shouldBeType = new Asn1UtcTime(content, constructed);
                         break;
                     case Asn1Type.GeneralizedTime:
-                        shouldBeType = new Asn1GeneralizedTime(content);
+                        shouldBeType = new Asn1GeneralizedTime(content, constructed);
                         break;
                     case Asn1Type.GraphicString:
-                        shouldBeType = new Asn1GraphicString(content);
+                        shouldBeType = new Asn1GraphicString(content, constructed);
                         break;
                     case Asn1Type.GeneralString:
-                        shouldBeType = new Asn1GeneralString(content);
+                        shouldBeType = new Asn1GeneralString(content, constructed);
                         break;
                     case Asn1Type.UniversalString:
-                        shouldBeType = new Asn1UniversalString(content);
+                        shouldBeType = new Asn1UniversalString(content, constructed);
                         break;
                     case Asn1Type.BmpString:
-                        shouldBeType = new Asn1BmpString(content);
+                        shouldBeType = new Asn1BmpString(content, constructed);
                         break;
                     case Asn1Type.ObjectDescriptor:
                     case Asn1Type.External:
@@ -217,7 +217,7 @@ namespace Net.Asn1
                     case Asn1Type.CharacterString:
                     case Asn1Type.LongForm:
                     default:
-                        throw new NotSupportedException();
+                        throw new NotSupportedException($"ASN.1 tag {tag} is unsupported.");
                 }
             }
 

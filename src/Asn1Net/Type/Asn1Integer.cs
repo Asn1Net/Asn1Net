@@ -33,6 +33,7 @@ namespace Net.Asn1.Type
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Asn1Integer"/> class. Preferably used when encoding INTEGER.
+        /// The encoding of an integer value shall be primitive.
         /// </summary>
         /// <param name="content">Content to be encoded.</param>
         public Asn1Integer(BigInteger content)
@@ -42,11 +43,12 @@ namespace Net.Asn1.Type
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Asn1Integer"/> class from BER encoded value.
-        /// Preferably used when reading INTEGER.
+        /// Preferably used when reading INTEGER. The encoding of an integer value shall be primitive.
         /// </summary>
         /// <param name="content">BER encoded value in a Stream.</param>
-        internal Asn1Integer(SubStream content)
-            : base(Asn1Class.Universal, false, (int)Asn1Type.Integer, content)
+        /// <param name="constructed">Flag if type is constructed or primitive.</param>
+        internal Asn1Integer(SubStream content, bool constructed)
+            : base(Asn1Class.Universal, constructed, (int)Asn1Type.Integer, content)
         {
         }
 

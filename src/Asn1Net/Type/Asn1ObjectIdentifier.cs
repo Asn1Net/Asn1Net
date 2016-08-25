@@ -34,6 +34,7 @@ namespace Net.Asn1.Type
         /// <summary>
         /// Initializes a new instance of the <see cref="Asn1ObjectIdentifier"/> class.
         /// Preferably used when encoding OBJECT IDENTIFIER.
+        /// The encoding of an object identifier value shall be primitive.
         /// </summary>
         /// <param name="content">Content to be encoded.</param>
         public Asn1ObjectIdentifier(string content)
@@ -44,16 +45,21 @@ namespace Net.Asn1.Type
         /// <summary>
         /// Initializes a new instance of the <see cref="Asn1ObjectIdentifier"/> class.
         /// Preferably used when reading OBJECT IDENTIFIER.
+        /// The encoding of an object identifier value shall be primitive.
         /// </summary>
         /// <param name="content">Content of given ASN.1 node as stream.</param>
-        internal Asn1ObjectIdentifier(SubStream content)
-            : base(Asn1Class.Universal, false, (int)Asn1Type.ObjectIdentifier, content)
+        /// <param name="constructed">Flag if type is constructed or primitive.</param>
+        internal Asn1ObjectIdentifier(SubStream content, bool constructed)
+            : base(Asn1Class.Universal, constructed, (int)Asn1Type.ObjectIdentifier, content)
         {
         }
 
         /// <inheritdoc/>
         public override byte[] Write()
         {
+            if (Constructed)
+                throw new FormatException("The encoding of an object identifier value shall be primitive.");
+
             var resBytes = new List<byte>();
             var oidParts = this.Content.Split(new string[] { "." }, StringSplitOptions.RemoveEmptyEntries)
                                        .Select(p => Convert.ToInt32(p, CultureInfo.InvariantCulture)).ToArray();

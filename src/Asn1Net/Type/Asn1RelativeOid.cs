@@ -34,6 +34,7 @@ namespace Net.Asn1.Type
         /// <summary>
         /// Initializes a new instance of the <see cref="Asn1RelativeOid"/> class.
         /// Preferably used when encoding RELATIVE OID.
+        /// The encoding of a relative object identifier value shall be primitive.
         /// </summary>
         /// <param name="content">Content to be encoded.</param>
         public Asn1RelativeOid(string content)
@@ -44,10 +45,12 @@ namespace Net.Asn1.Type
         /// <summary>
         /// Initializes a new instance of the <see cref="Asn1RelativeOid"/> class.
         /// Preferably used when reading RELATIVE OID.
+        /// The encoding of a relative object identifier value shall be primitive.
         /// </summary>
         /// <param name="content">BER encoded value in a Stream.</param>
-        internal Asn1RelativeOid(SubStream content)
-            : base(Asn1Class.Universal, false, (int)Asn1Type.RelativeOid, content)
+        /// <param name="constructed">Flag if type is constructed or primitive.</param>
+        internal Asn1RelativeOid(SubStream content, bool constructed)
+            : base(Asn1Class.Universal, constructed, (int)Asn1Type.RelativeOid, content)
         {
         }
 
@@ -92,6 +95,9 @@ namespace Net.Asn1.Type
         /// <inheritdoc/>
         public override byte[] Write()
         {
+            if (Constructed)
+                throw new FormatException("The encoding of a relative object identifier value shall be primitive.");
+
             var resBytes = new List<byte>();
             var oidParts = this.Content.Split(new string[] { "." }, StringSplitOptions.RemoveEmptyEntries)
                                        .Select(p => Convert.ToInt32(p, CultureInfo.InvariantCulture)).ToArray();

@@ -27,15 +27,20 @@ namespace Net.Asn1.Type
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Asn1Null"/> class.
+        /// The encoding of a null value shall be primitive. 
         /// </summary>
-        public Asn1Null()
-            : base(Asn1Class.Universal, false, (int)Asn1Type.Null)
+        /// <param name="constructed">Flag if type is constructed or primitive.</param>
+        public Asn1Null(bool constructed = false)
+            : base(Asn1Class.Universal, constructed, (int)Asn1Type.Null)
         {
         }
 
         /// <inheritdoc/>
         public override byte[] Write()
         {
+            if (Constructed)
+                throw new System.FormatException("The encoding of a null value shall be primitive.");
+
             return new byte[] { 0x05, 0x00 };
         }
     }

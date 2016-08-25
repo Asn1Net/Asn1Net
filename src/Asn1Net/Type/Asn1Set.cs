@@ -33,28 +33,35 @@ namespace Net.Asn1.Type
         /// <summary>
         /// Initializes a new instance of the <see cref="Asn1Set"/> class.
         /// Preferably used when encoding SET.
+        /// The encoding of a set value shall be constructed.
         /// </summary>
         /// <param name="asn1Class">Class of given Asn.1 object.</param>
         /// <param name="content">Content to be encoded.</param>
-        public Asn1Set(Asn1Class asn1Class, List<Asn1ObjectBase> content)
-            : base(asn1Class, true, (int)Asn1Type.Set, content)
+        /// <param name="constructed">Flag if type is constructed or primitive.</param>
+        public Asn1Set(Asn1Class asn1Class, List<Asn1ObjectBase> content, bool constructed = true)
+            : base(asn1Class, constructed, (int)Asn1Type.Set, content)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Asn1Set"/> class.
         /// Preferably used when reading SET.
+        /// The encoding of a set value shall be constructed.
         /// </summary>
         /// <param name="asn1Class">Class of given Asn.1 object.</param>
         /// <param name="content">BER encoded value in a Stream.</param>
-        internal Asn1Set(Asn1Class asn1Class, SubStream content)
-            : base(asn1Class, true, (int)Asn1Type.Set, content)
+        /// <param name="constructed">Flag if type is constructed or primitive.</param>
+        internal Asn1Set(Asn1Class asn1Class, SubStream content, bool constructed)
+            : base(asn1Class, constructed, (int)Asn1Type.Set, content)
         {
         }
 
         /// <inheritdoc/>
         public override byte[] Write()
         {
+            if (Constructed == false)
+                throw new FormatException("The encoding of a sequence value shall be constructed.");
+
             var contentBytes = new List<byte>();
             var comparer = new SetComparer();
 

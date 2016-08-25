@@ -34,6 +34,7 @@ namespace Net.Asn1.Type
         /// <summary>
         /// Initializes a new instance of the <see cref="Asn1T61String"/> class.
         /// Preferably used when encoding T61 STRING.
+        /// For bit string, octet string and restricted character string types, the constructed form of encoding shall not be used.
         /// </summary>
         /// <param name="content">Content to be encoded.</param>
         public Asn1T61String(string content)
@@ -46,14 +47,18 @@ namespace Net.Asn1.Type
         /// Preferably used when reading T61 STRING.
         /// </summary>
         /// <param name="content">BER encoded value in a Stream.</param>
-        internal Asn1T61String(SubStream content)
-            : base(Asn1Class.Universal, false, (int)Asn1Type.T61String, content)
+        /// <param name="constructed">Flag if type is constructed or primitive.</param>
+        internal Asn1T61String(SubStream content, bool constructed)
+            : base(Asn1Class.Universal, constructed, (int)Asn1Type.T61String, content)
         {
         }
 
         /// <inheritdoc/>
         public override byte[] Write()
         {
+            if (Constructed)
+                throw new FormatException("For bit string, octet string and restricted character string types, the constructed form of encoding shall not be used.");
+
             var res = new List<byte>();
             var val = Encoding.UTF8.GetBytes(this.Content);
 

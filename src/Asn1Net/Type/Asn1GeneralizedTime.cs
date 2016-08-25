@@ -46,14 +46,18 @@ namespace Net.Asn1.Type
         /// Initializes a new instance of the <see cref="Asn1GeneralizedTime"/> class. Preferably used when reading GENERALIZED TIME.
         /// </summary>
         /// <param name="content">BER encoded value in a Stream.</param>
-        internal Asn1GeneralizedTime(SubStream content)
-            : base(Asn1Class.Universal, false, (int)Asn1Type.GeneralizedTime, content)
+        /// <param name="constructed">Flag if type is constructed or primitive.</param>
+        internal Asn1GeneralizedTime(SubStream content, bool constructed)
+            : base(Asn1Class.Universal, constructed, (int)Asn1Type.GeneralizedTime, content)
         {
         }
 
         /// <inheritdoc/>
         public override byte[] Write()
         {
+            if (Constructed)
+                throw new FormatException("The encoding of the TIME type shall be primitive.");
+
             var utcDateTime = this.Content.ToUniversalTime();
             var dateTimeString = (utcDateTime.Millisecond != 0)
                 ? utcDateTime.ToString("yyyyMMddHHmmss.FFFFFFF", CultureInfo.InvariantCulture)

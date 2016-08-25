@@ -47,11 +47,14 @@ namespace Net.Asn1.Type
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Asn1BitString"/> class. Preferably used when encoding bit string.
+        /// The encoding of a bit string value shall be either primitive or constructed at the option of the sender.
+        /// NOTE – Where it is necessary to transfer part of a bit string before the entire bit string is available, the constructed encoding is used.
         /// </summary>
         /// <param name="content">Content to be encoded.</param>
         /// <param name="unusedBits">Unused bits. Last X bits of Content will be cleared.</param>
-        public Asn1BitString(byte[] content, int unusedBits)
-            : base(Asn1Class.Universal, false, (int)Asn1Type.BitString, content)
+        /// <param name="constructed">Flag if type is constructed or primitive.</param>
+        public Asn1BitString(byte[] content, int unusedBits, bool constructed = false)
+            : base(Asn1Class.Universal, constructed, (int)Asn1Type.BitString, content)
         {
             if (content == null)
             {
@@ -79,10 +82,13 @@ namespace Net.Asn1.Type
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Asn1BitString"/> class. Preferably used when reading bit string.
+        /// The encoding of a bit string value shall be either primitive or constructed at the option of the sender. 
+        /// NOTE – Where it is necessary to transfer part of a bit string before the entire bit string is available, the constructed encoding is used.
         /// </summary>
         /// <param name="content">Content of given ASN.1 node as stream.</param>
-        internal Asn1BitString(SubStream content)
-             : base(Asn1Class.Universal, false, (int)Asn1Type.BitString, content)
+        /// <param name="constructed">Flag if type is constructed or primitive.</param>
+        internal Asn1BitString(SubStream content, bool constructed)
+             : base(Asn1Class.Universal, constructed, (int)Asn1Type.BitString, content)
         {
             if (content == null)
             {
@@ -101,7 +107,13 @@ namespace Net.Asn1.Type
             var resBytes = new List<byte>();
             resBytes.AddRange(DerWriter.WriteTag(this.Asn1Class, this.Asn1Tag, this.Constructed));
             resBytes.AddRange(DerWriter.WriteLength(this.Content, (Asn1Type)this.Asn1Tag));
-            resBytes.Add((byte)this.UnusedBits);
+
+            // The contents octets for the primitive encoding shall contain an initial octet followed by zero, one or more subsequent octets.
+            if (Constructed == false)
+            {
+                resBytes.Add((byte)this.UnusedBits);
+            }
+
             resBytes.AddRange(this.Content);
 
             return resBytes.ToArray();

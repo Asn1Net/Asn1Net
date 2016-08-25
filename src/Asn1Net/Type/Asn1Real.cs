@@ -34,7 +34,7 @@ namespace Net.Asn1.Type
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Asn1Real"/> class.
-        /// Preferably used when encoding REAL.
+        /// Preferably used when encoding REAL. The encoding of a real value shall be primitive.
         /// </summary>
         /// <param name="content">Content to be encoded.</param>
         public Asn1Real(double content)
@@ -44,11 +44,12 @@ namespace Net.Asn1.Type
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Asn1Real"/> class.
-        /// Preferably used when reading REAL.
+        /// Preferably used when reading REAL. The encoding of a real value shall be primitive.
         /// </summary>
         /// <param name="content">BER encoded value in a Stream.</param>
-        internal Asn1Real(SubStream content)
-            : base(Asn1Class.Universal, false, (int)Asn1Type.Real, content)
+        /// <param name="constructed">Flag if type is constructed or primitive.</param>
+        internal Asn1Real(SubStream content, bool constructed)
+            : base(Asn1Class.Universal, constructed, (int)Asn1Type.Real, content)
         {
         }
 

@@ -33,6 +33,7 @@ namespace Net.Asn1.Type
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Asn1Enumerated"/> class. Preferably used when encoding ENUMERATED.
+        /// The encoding of an enumerated value shall be that of the integer value with which it is associated. NOTE – It is primitive. 
         /// </summary>
         /// <param name="content">Content to be encoded.</param>
         public Asn1Enumerated(BigInteger content)
@@ -42,10 +43,12 @@ namespace Net.Asn1.Type
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Asn1Enumerated"/> class. Preferably used when reading ENUMERATED.
+        /// The encoding of an enumerated value shall be that of the integer value with which it is associated. NOTE – It is primitive. 
         /// </summary>
         /// <param name="content">BER encoded value in a Stream.</param>
-        internal Asn1Enumerated(SubStream content)
-            : base(Asn1Class.Universal, false, (int)Asn1Type.Enumerated, content)
+        /// <param name="constructed">Flag if type is constructed or primitive.</param>
+        internal Asn1Enumerated(SubStream content, bool constructed)
+            : base(Asn1Class.Universal, constructed, (int)Asn1Type.Enumerated, content)
         {
         }
 
