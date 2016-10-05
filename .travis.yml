@@ -5,6 +5,11 @@ sudo: required
 dist: trusty  
 env:  
   - CLI_VERSION=latest
+# whitelist
+branches:
+  only:
+    - master
+    - configure-travis  
 addons:  
   apt:
     packages:
