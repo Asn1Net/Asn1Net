@@ -3,7 +3,6 @@ sudo: required
 dist: trusty  
 dotnet: 1.0.0-preview2-003121
 env:  
-  - DOTNETCORE=1
   - CLI_VERSION=latest
 addons:  
   apt:
