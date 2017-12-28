@@ -11,7 +11,7 @@
     <Authors>Peter Polacko</Authors>
     <Product>Asn1Net</Product>
     <Description>Managed library for reading and writing ASN.1 objects.</Description>
-    <Copyright>Copyright © 2016 The Asn1Net Project</Copyright>
+    <Copyright>Copyright © 2016-2017 The Asn1Net Project</Copyright>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageLicenseUrl>https://github.com/Asn1Net/Asn1Net/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/Asn1Net/Asn1Net</PackageProjectUrl>
