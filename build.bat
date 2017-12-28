@@ -19,7 +19,9 @@ dotnet build .\src\Asn1Net\ --configuration Release || goto :error
 dotnet restore .\test\Asn1Net.Test\ || goto :error
 dotnet build .\test\Asn1Net.Test\ --configuration Release || goto :error
 @rem CI will run tests
-@rem dotnet test .\test\Asn1Net.Test\ || goto :error
+@if NOT "%CI%" == "True" (
+	dotnet test .\test\Asn1Net.Test\ || goto :error
+)
 
 @rem Copy result to output directory
 mkdir netstandard1.3 || goto :error
