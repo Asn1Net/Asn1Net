@@ -19,7 +19,9 @@ dotnet build .\src\Asn1Net\ --configuration Release || goto :error
 dotnet restore .\test\Asn1Net.Test\ || goto :error
 dotnet build .\test\Asn1Net.Test\ --configuration Release || goto :error
 @rem CI will run tests
-@rem dotnet test .\test\Asn1Net.Test\ || goto :error
+@if NOT "%CI%" == "True" (
+	dotnet test .\test\Asn1Net.Test\ || goto :error
+)
 
 @rem Copy result to output directory
 mkdir netstandard1.3 || goto :error
@@ -27,8 +29,9 @@ copy .\src\Asn1Net\bin\Release\netstandard1.3\Asn1Net.dll .\netstandard1.3 || go
 copy .\src\Asn1Net\bin\Release\netstandard1.3\Asn1Net.xml .\netstandard1.3 || goto :error
 
 @rem Create nuget package
+set cur_dir=%CD%
 mkdir nupkgs || goto :error
-dotnet pack .\src\Asn1Net\ --configuration Release --output .\nupkgs || goto :error
+dotnet pack .\src\Asn1Net\ --configuration Release --output %cur_dir%\nupkgs || goto :error
 
 @echo *** BUILD NETSTANDARD1.3 SUCCESSFUL ***
 @endlocal

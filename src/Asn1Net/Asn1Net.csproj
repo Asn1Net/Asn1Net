@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Build">
+    <TargetFramework>netstandard1.3</TargetFramework>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Package">
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <Authors>Peter Polacko</Authors>
+    <Product>Asn1Net</Product>
+    <Description>Asn1Net is portable library written in C# that enables convenient yet powerful ASN.1 processing in .NET environment</Description>
+    <Copyright>Copyright © 2016-2017 The Asn1Net Project</Copyright>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageLicenseUrl>https://github.com/Asn1Net/Asn1Net/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/Asn1Net/Asn1Net</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Asn1Net/Asn1Net.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>ASN.1;asn1;parser;BER</PackageTags>
+    <PackageReleaseNotes></PackageReleaseNotes>
+
+    <NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>
+  </PropertyGroup>
+
+  <ItemGroup Label="Package References">
+
+  </ItemGroup>
+
+</Project>
