@@ -1,6 +1,7 @@
 language: csharp  
 sudo: required  
 dist: trusty  
+dotnet: 2.1.3
 env:  
   - CLI_VERSION=latest
 addons:  
