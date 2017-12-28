@@ -27,8 +27,9 @@ copy .\src\Asn1Net\bin\Release\netstandard1.3\Asn1Net.dll .\netstandard1.3 || go
 copy .\src\Asn1Net\bin\Release\netstandard1.3\Asn1Net.xml .\netstandard1.3 || goto :error
 
 @rem Create nuget package
+set cur_dir=%CD%
 mkdir nupkgs || goto :error
-dotnet pack .\src\Asn1Net\ --configuration Release --output .\nupkgs || goto :error
+dotnet pack .\src\Asn1Net\ --configuration Release --output %cur_dir%\nupkgs || goto :error
 
 @echo *** BUILD NETSTANDARD1.3 SUCCESSFUL ***
 @endlocal
